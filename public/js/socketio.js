@@ -4,12 +4,11 @@ var $devicePage = $('.device-section');
 var $deviceButton = $('.button-section');
 var $deviceCircle = $('.device-section .circle');
 var $sensorPage = $('.sensor-section');
-var $sensorButton = $('.sensor-button-section');
+var $sensorButton = $('.sensor-buttonn-section');
 var $switchPage = $('.switch-section');
-var $switchButton = $('.switch-button-section');
+var $switchButton = $('.switch-buttonnn-section');
 
 var devices;
-var socket = io.connect();
 
 $devicePage.click(function () {
     var data = $(this).data('device-id');
@@ -28,7 +27,7 @@ $deviceButton.click(function () {
     });
 });
 
-socket.on('update', function (data) {
+io.on('update', function (data) {
     console.log(data);
     devices = data;
 });
@@ -50,7 +49,7 @@ $sensorButton.click(function () {
     });
 });
 
-socket.on('update-sensor', function (data) {
+io.on('update-sensor', function (data) {
     console.log(data);
     sensor = data;
 });
@@ -72,24 +71,24 @@ $switchButton.click(function () {
     });
 });
 
-socket.on('update-switch', function (data) {
+io.on('update-switch', function (data) {
     console.log(data);
     switchIot = data;
 });
 
-socket.on('connect',function() {
+io.on('connect',function() {
     console.log('Client has connected to the server!');
 });
 // Add a connect listener
-socket.on('message',function(data) {
+io.on('message',function(data) {
     console.log('Received a message from the server!',data);
 });
 // Add a disconnect listener
-socket.on('disconnect',function() {
+io.on('disconnect',function() {
     console.log('The client has disconnected!');
 });
 
-socket.on('statedevice',function(data) {
+io.on('state-device-button',function(data) {
     var status = data.status;
     var id = data.id;
     var text;
@@ -98,16 +97,27 @@ socket.on('statedevice',function(data) {
     $deviceButton.children("div").children("button").attr("class", "status-" + status);
     if(status=="inactivo"){
         text = "OFF";
+        $('.device-section[data-device-id="'+id+'"] .circle').attr("class", "circle status-" + status);
+        console.log($('.device-status[data-device-id="'+id+'"]'));
     }else{
         text ="ON"
     }
     $deviceButton.children("div").children("button").text(text);
     //$deviceCircle.attr("class", "circle status-" + status);
+    //console.log($('.device-status[data-device-id="'+id+'"]'));
+});
+
+io.on('state-device-circle',function(data) {
+    var status = data.status;
+    var id = data.id;
+    var text;
+    console.log("5",status);
+    //$deviceCircle.attr("class", "circle status-" + status);
     $('.device-section[data-device-id="'+id+'"] .circle').attr("class", "circle status-" + status);
     //console.log($('.device-status[data-device-id="'+id+'"]'));
 });
 
-socket.on('statesensor',function(data) {
+io.on('statesensor',function(data) {
     var status = data.status;
     var id = data.id;
     var text;
@@ -123,7 +133,7 @@ socket.on('statesensor',function(data) {
     $('.sensor-status-section[data-sensor-id="'+id+'"] .circle').attr("class", "circle status-" + status);
 });
 
-socket.on('stateswitch',function(data) {
+io.on('stateswitch',function(data) {
     var status = data.status;
     var id = data.id;
     var text;

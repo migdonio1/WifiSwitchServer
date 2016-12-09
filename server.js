@@ -56,41 +56,45 @@ db.once('open', function() {
     app.use('/', webRouter);
 
 
-    io.sockets.on('connection', function(socket) {
+    io.on('connection', function(socket) {
         socket.on('update-socket', function (data) {
-            socket.emit('update', {data : data});
+            io.emit('update', {data : data});
         });
         socket.on('update-state', function (data) {
             console.log("3",data);
             Device.findByIdAndUpdate(data.id, {status : data.status}, function (err, device) {
                 console.log("4",data.status);
-                socket.emit('statedevice', {
+                io.emit('state-device-button', {
+                    status : data.status,
+                    id : data.id
+                });
+                io.emit('state-device-circle', {
                     status : data.status,
                     id : data.id
                 });
             })
         });
         socket.on('update-sensor', function (data) {
-            socket.emit('update-sensor', {data : data});
+            io.emit('update-sensor', {data : data});
         });
         socket.on('update-state-sensor', function (data) {
             console.log("3",data);
             Sensor.findByIdAndUpdate(data.id, {status : data.status}, function (err, sensor) {
                 console.log("4",data.status);
-                socket.emit('statesensor', {
+                io.emit('statesensor', {
                     status : data.status,
                     id : data.id
                 });
             })
         });
         socket.on('update-switch', function (data) {
-            socket.emit('update-switch', {data : data});
+            io.emit('update-switch', {data : data});
         });
         socket.on('update-state-switch', function (data) {
             console.log("3",data);
             Switch.findByIdAndUpdate(data.id, {status : data.status}, function (err, switchIot) {
                 console.log("4",data.status);
-                socket.emit('stateswitch', {
+                io.emit('stateswitch', {
                     status : data.status,
                     id : data.id
                 });

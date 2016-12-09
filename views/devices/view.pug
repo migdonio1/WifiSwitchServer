@@ -39,7 +39,7 @@ mixin sensor-section(sensor)
                     .col-sm-8
                         h2.sensor-name= sensor.name
                     .col-sm-4
-                        .sensor-button-section(data-sensor-id=sensor._id, data-sensor-status=sensor.status)
+                        .sensor-buttonn-section(data-sensor-id=sensor._id, data-sensor-status=sensor.status)
                             if sensor.status == "inactivo"
                                 buttonSensor.status-inactivo(type='button', style='margin-left: 11px;') OFF
                             else
@@ -61,7 +61,7 @@ mixin switch-section(switchIot)
                     .col-sm-8
                         h2.switch-name= switchIot.name
                     .col-sm-4
-                        .switch-button-section(data-switch-id=switchIot._id, data-switch-status=switchIot.status)
+                        .switch-buttonnn-section(data-switch-id=switchIot._id, data-switch-status=switchIot.status)
                             if switchIot.status == "inactivo"
                                 buttonSwitch.status-inactivo(type='button', style='margin-left: 11px;') OFF
                             else
