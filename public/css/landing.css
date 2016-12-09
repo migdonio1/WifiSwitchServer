@@ -1,0 +1,27 @@
+.backgroundImage{
+    background-image: url("../img/iot1.jpg");
+    width: 1519px;
+    height: 709px;
+}
+
+.navbarColor{
+    background-color: #303F9F;
+}
+
+.backgroundSection{
+    background-color: #303F9F;
+}
+
+.backgroundSection2{
+    background-color: white;
+}
+
+.logoColor{
+    color: #FF4081;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
