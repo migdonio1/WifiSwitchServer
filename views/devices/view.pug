@@ -14,6 +14,8 @@ block content
 
             +sensor-switch-section(data)
 
+            +button-section(data)
+
         .col-sm-5
             .map-section
                 +map-section(data)
@@ -37,7 +39,12 @@ mixin sensor-section(sensor)
                     .col-sm-8
                         h2.sensor-name= sensor.name
                     .col-sm-4
-                        .sensor-status-section
+                        .sensor-button-section(data-sensor-id=sensor._id, data-sensor-status=sensor.status)
+                            if sensor.status == "inactivo"
+                                buttonSensor.status-inactivo(type='button', style='margin-left: 11px;') OFF
+                            else
+                                buttonSensor.status-activo(type='button', style='margin-left: 11px;') ON
+                        .sensor-status-section(data-sensor-id=sensor._id, data-sensor-status=sensor.status)
                             h2(class="circle status-" + sensor.status)
                     .col-sm-6
                         .sensor-date-section
@@ -54,7 +61,12 @@ mixin switch-section(switchIot)
                     .col-sm-8
                         h2.switch-name= switchIot.name
                     .col-sm-4
-                        .switch-status-section
+                        .switch-button-section(data-switch-id=switchIot._id, data-switch-status=switchIot.status)
+                            if switchIot.status == "inactivo"
+                                buttonSwitch.status-inactivo(type='button', style='margin-left: 11px;') OFF
+                            else
+                                buttonSwitch.status-activo(type='button', style='margin-left: 11px;') ON
+                        .switch-status-section(data-switch-id=switchIot._id, data-switch-status=switchIot.status)
                             h5(class="circle status-" + switchIot.status)
                     .col-sm-6
                         .switch-timeOn-section
@@ -91,3 +103,13 @@ mixin device-section(device)
                     .col-sm-6
                         .device-sensors
                             h4= device.sensors.length + " Sensores"
+
+mixin button-section(device)
+    .row
+        .col-sm-offset-5.col-sm-2
+                .button-section(data-device-id=device._id, data-device-status=device.status)
+                    .row
+                        if device.status == "inactivo"
+                            button.status-inactivo(type='button', style='margin-left: 11px;') OFF
+                        else
+                            button.status-activo(type='button', style='margin-left: 11px;') ON

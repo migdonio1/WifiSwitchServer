@@ -8,3 +8,4 @@ $('.device-section').click(function(){
     var id = $(this).data('device-id');
     window.location = basePath + "devices/" + id;
 });
+

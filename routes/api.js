@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var Device = mongoose.model('Device');
 var Sensor = mongoose.model('Sensor');
 var Switch = mongoose.model('Switch');
+var typing = false;
 
 router.use(function(req, res, next) {
     next();
@@ -25,7 +26,6 @@ router.route('/devices')
                 model: 'Switch'
             })
             .exec(function(err, devices) {
-
                 res.json(devices);
             });
     });

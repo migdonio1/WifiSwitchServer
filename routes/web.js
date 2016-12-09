@@ -4,6 +4,9 @@
 
 var express = require('express');
 var router = express.Router();
+var app = express();
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
 var mongoose = require('mongoose');
 var Device = mongoose.model('Device');
@@ -25,6 +28,9 @@ router
     .get('/devices', function(req, res) {
         Device.find({})
             .exec(function(err, devices) {
+                io.emit('update', {
+                    data: devices
+                });
                 res.render('devices/index', {
                     title: 'Mis Dispositivos',
                     data: devices
