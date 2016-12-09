@@ -1,0 +1,93 @@
+extends ../layout
+
+block content-title
+    .container-fluid
+        .row
+            .col-sm-12.content-title-section
+                h2.content-title= title
+
+block content
+    .row
+        .col-sm-7
+            .devices-section
+                +device-section(data)
+
+            +sensor-switch-section(data)
+
+        .col-sm-5
+            .map-section
+                +map-section(data)
+
+mixin sensor-switch-section(device)
+    .row
+        .col-sm-12
+            .sensors-section
+                each sensor in device.sensors
+                    +sensor-section(sensor)
+        .col-sm-12
+            .switchs-section
+                each switchIot in device.switchs
+                    +switch-section(switchIot)
+
+mixin sensor-section(sensor)
+    .row
+        .col-sm-12
+            .sensor-section
+                .row
+                    .col-sm-8
+                        h2.sensor-name= sensor.name
+                    .col-sm-4
+                        .sensor-status-section
+                            h2(class="circle status-" + sensor.status)
+                    .col-sm-6
+                        .sensor-date-section
+                            h5.sensor-date= sensor.date
+                    .col-sm-6
+                        .sensor-value-section
+                            h5.sensor-value= sensor.value
+
+mixin switch-section(switchIot)
+    .row
+        .col-sm-12
+            .switch-section
+                .row
+                    .col-sm-8
+                        h2.switch-name= switchIot.name
+                    .col-sm-4
+                        .switch-status-section
+                            h5(class="circle status-" + switchIot.status)
+                    .col-sm-6
+                        .switch-timeOn-section
+                            h5.switch-timeOn= switchIot.timeOn
+
+mixin map-section(device)
+    .row
+        .col-sm-12
+            .map-frame
+                div(class="map",
+                id="map" + device._id,
+                data-id=device._id,
+                data-lat=device.position.latitude,
+                data-lng=device.position.longitude,
+                data-device-name=device.name)
+
+mixin device-section(device)
+    .row
+        .col-sm-12
+            .device-section(data-device-id=device._id)
+                .row
+                    .col-sm-8
+                        h2.device-name= device.name
+                    .col-sm-4
+                        .device-status-section
+                            h4(class="circle status-" + device.status)
+                    .col-sm-12
+                        .device-position
+                            h4= "Latitud: " + device.position.latitude
+                            h4= "Longitud: " + device.position.longitude
+                    .col-sm-6
+                        .device-switchs
+                            h4= device.switchs.length + " Switchs"
+                    .col-sm-6
+                        .device-sensors
+                            h4= device.sensors.length + " Sensores"

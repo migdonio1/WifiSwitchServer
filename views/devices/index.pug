@@ -1,0 +1,94 @@
+extends ../layout
+
+block content-title
+    .container-fluid
+        .row
+            .col-sm-12.content-title-section
+                h2.content-title= title
+
+block content
+    +devices-section(data)
+
+mixin devices-section(data)
+    div.row
+        each device in data
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+            .col-sm-4
+                div.devices-section
+                    +device-section(device)
+
+
+mixin sensor-switch-section(device)
+    .row
+        .col-sm-12
+            .sensors-section
+                each sensor in device.sensors
+                    +sensor-section(sensor)
+        .col-sm-12
+            .switchs-section
+                each switchIot in device.switchs
+                    +switch-section(switchIot)
+
+mixin sensor-section(sensor)
+    .row
+        .col-sm-12
+            .sensor-section
+                h3= sensor.name
+
+mixin switch-section(switchIot)
+    .row
+        .col-sm-12
+            .switch-section
+                h1= switchIot.name
+
+
+mixin device-section(device)
+    .row
+        .col-sm-12
+            .device-section(data-device-id=device._id)
+                .row
+                    .col-sm-8
+                        h2.device-name= device.name
+                    .col-sm-4
+                        .device-status-section
+                            h4(class="circle status-" + device.status)
+                    .col-sm-12
+                        .device-position
+                            h4= "Latitud: " + device.position.latitude
+                            h4= "Longitud: " + device.position.longitude
+                    .col-sm-6
+                        .device-switchs
+                            h4= device.switchs.length + " Switchs"
+                    .col-sm-6
+                        .device-sensors
+                            h4= device.sensors.length + " Sensores"
+
+
+mixin map-section(device)
+    .col-sm-12
+        .map-frame
+            div(class="map",
+            id="map" + device._id,
+            data-id=device._id,
+            data-lat=device.position.latitude,
+            data-lng=device.position.longitude)

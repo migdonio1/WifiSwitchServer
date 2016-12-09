@@ -1,0 +1,32 @@
+doctype html
+html
+    head
+        title= title
+
+        link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Hind:300,500")
+        link(rel='stylesheet', href='/lib/bootstrap/dist/css/bootstrap.min.css')
+        link(rel='stylesheet', href='/css/style.css')
+        link(rel='stylesheet', href='/css/navbar.css')
+        block styles
+    body
+
+        include partials/navbar
+
+        block content-title
+
+        .container-fluid
+            .row
+                .col-sm-12
+                    block content
+
+        include partials/footer
+
+        script(src="/lib/jquery/dist/jquery.min.js")
+        script(src="/lib/bootstrap/dist/js/bootstrap.min.js")
+        script(src="https://cdn.socket.io/socket.io-1.4.5.js")
+        script(src="/js/socketio.js")
+        script(async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmW_oTyMbsLQEDvQ6mJjYK6cXp-lOcZvQ&callback=initMaps")
+        script(src="/js/maps.js")
+        script(src="/js/routes.js")
+        block scripts
+

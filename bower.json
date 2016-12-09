@@ -1,0 +1,23 @@
+{
+  "name": "iot-server",
+  "description": "",
+  "main": "server.js",
+  "authors": [
+    "Raul Migdonio Rodriguez Te <raulmigdonio@gmail.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/migdonio1/super-iot-izi-project",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "socket.io": "^1.5.1"
+  }
+}
