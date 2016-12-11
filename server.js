@@ -56,10 +56,57 @@ db.once('open', function() {
     app.use('/', webRouter);
 
 
-    io.sockets.on('connection', function(socket) {
-        socket.on('demo-socket', function (data) {
-            console.log(data);
-            socket.emit('demo-holis', {data: "holis"});
+    io.on('connection', function(socket) {
+        socket.on('update-socket', function (data) {
+            io.emit('update', {data : data});
+        });
+        socket.on('update-state', function (data) {
+            console.log("3",data);
+            Device.findByIdAndUpdate(data.id, {status : data.status}, function (err, device) {
+                console.log("4",data.status);
+                io.emit('state-device-button', {
+                    status : data.status,
+                    id : data.id
+                });
+                io.emit('state-device-circle', {
+                    status : data.status,
+                    id : data.id
+                });
+            })
+        });
+        socket.on('update-sensor', function (data) {
+            io.emit('update-sensor', {data : data});
+        });
+        socket.on('update-state-sensor', function (data) {
+            console.log("3",data);
+            Sensor.findByIdAndUpdate(data.id, {status : data.status}, function (err, sensor) {
+                console.log("4",data.status);
+                io.emit('statesensor', {
+                    status : data.status,
+                    id : data.id
+                });
+            })
+        });
+        socket.on('update-switch', function (data) {
+            io.emit('update-switch', {data : data});
+        });
+        socket.on('update-state-switch', function (data) {
+            console.log("3",data);
+            Switch.findByIdAndUpdate(data.id, {status : data.status}, function (err, switchIot) {
+                console.log("4",data.status);
+                io.emit('stateswitch', {
+                    status : data.status,
+                    id : data.id
+                });
+            })
+        });
+        // Success!  Now listen to messages to be received
+        socket.on('message',function(event){
+            console.log('Received message from client!',event);
+        });
+
+        socket.on('disconnect',function(){
+            console.log('Server has disconnected');
         });
     });
 
@@ -74,7 +121,7 @@ function initModels() {
     require("./models/Device.model");
     require("./models/User.model");
 
-    Swtich = mongoose.model('Switch');
+    Switch = mongoose.model('Switch');
     Sensor = mongoose.model('Sensor');
     Device = mongoose.model('Device');
     User = mongoose.model('User');
