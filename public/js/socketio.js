@@ -18,8 +18,7 @@ $devicePage.click(function () {
 });
 
 $deviceButton.click(function () {
-    console.log("1",$(this).attr('data-device-status'));
-    var status = $(this).attr('data-device-status') == "activo"? "inactivo" : "activo";
+    var status = $(this).attr('data-device-status') == "activo" ? "inactivo" : "activo";
     console.log("2",status);
     io.emit('update-state', {
             id : $(this).data('device-id'),
@@ -97,8 +96,6 @@ io.on('state-device-button',function(data) {
     $deviceButton.children("div").children("button").attr("class", "status-" + status);
     if(status=="inactivo"){
         text = "OFF";
-        $('.device-section[data-device-id="'+id+'"] .circle').attr("class", "circle status-" + status);
-        console.log($('.device-status[data-device-id="'+id+'"]'));
     }else{
         text ="ON"
     }
