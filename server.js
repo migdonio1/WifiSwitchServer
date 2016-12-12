@@ -66,7 +66,6 @@ db.once('open', function() {
             io.emit('update', {data : data});
         });
         socket.on('update-state', function (data) {
-            data = JSON.parse(data);
             console.log("3",data.id);
             /*console.log("3",data.name);
             console.log("3",data.position);*/
