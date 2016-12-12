@@ -21,6 +21,11 @@ body {
 
 .devices-section {
     padding: 15px 0 15px 15px;
+    min-height: 90vh;
+}
+
+.single-device-section {
+    padding: 15px 0 15px 15px;
 }
 
 .sensors-section, .switchs-section {
