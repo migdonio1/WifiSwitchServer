@@ -1,4 +1,4 @@
-var io = io.connect('http://localhost:3030');
+var io = io.connect('http://iot.migdonio.me:3030');
 
 var $devicePage = $('.device-section');
 var $deviceButton = $('.button-section');
