@@ -57,13 +57,20 @@ db.once('open', function() {
 
 
     io.on('connection', function(socket) {
+
+        socket.on('holi', function (device) {
+           console.log("Recibido capitan");
+        });
+
         socket.on('update-socket', function (data) {
             io.emit('update', {data : data});
         });
         socket.on('update-state', function (data) {
-            console.log("3",data);
+            console.log("3",data.id);
+            /*console.log("3",data.name);
+            console.log("3",data.position);*/
             Device.findByIdAndUpdate(data.id, {status : data.status}, function (err, device) {
-                console.log("4",data.status);
+                console.log("4",device);
                 io.emit('state-device-button', {
                     status : data.status,
                     id : data.id

@@ -15,6 +15,15 @@ router.use(function(req, res, next) {
 });
 
 router.route('/devices')
+    .post(function(req, res) {
+        Device.create(req.body, function(err, device){
+            if(err) {
+                res.send(err);
+            } else {
+                res.json(device);
+            }
+        })
+    })
     .get(function(req, res) {
         Device.find({})
             .populate({
@@ -47,9 +56,42 @@ router.route('/devices/:device_id')
                 }
                 res.json(device);
             });
+    })
+    .delete(function(req, res) {
+        Device.remove({
+            _id: req.params.device_id
+        }, function(err, device) {
+            if(err) {
+                res.send(err);
+            } else {
+                res.json(device);
+            }
+        });
     });
 
 router.route('/devices/:device_id/sensors')
+    .post(function(req, res) {
+        Device.findById(req.params.device_id)
+            .exec(function(err, device){
+                if(err) {
+                    res.send(err);
+                } else {
+                    Sensor.create(req.body, function(err, sensors){
+                        for(var i=0; i<sensors.length; i++){
+                            device.sensors.push(sensors[i]._id);
+                        }
+
+                        device.save(function(err, device) {
+                            if(err) {
+                                res.send(err);
+                            } else {
+                                res.json(device);
+                            }
+                        })
+                    });
+                }
+            })
+    })
     .get(function(req,res) {
         Device.findById(req.params.device_id)
             .exec(function(err, device) {
@@ -58,11 +100,8 @@ router.route('/devices/:device_id/sensors')
                         $in: device.sensors
                     }
                 }, function(err, sensors){
-                    var data = {
-                        device: device,
-                        sensors: sensors
-                    };
-                    res.json(data);
+                    device.sensors = sensors;
+                    res.json(device);
                 });
             });
     });
@@ -71,20 +110,40 @@ router.route('/devices/:device_id/sensors/:sensor_id')
     .get(function(req, res) {
         Device.findById(req.params.device_id)
             .exec(function(err, device){
-
                 Sensor.findById(req.params.sensor_id)
                     .exec(function(err, sensor) {
-                        var data = {
-                            device: device,
-                            sensor: sensor
-                        };
-
-                        res.json(data);
+                        console.log("holis1",device);
+                        console.log("holis2",sensor);
+                        device.sensors = [sensor];
+                        console.log("holis3",device);
+                        res.json(device);
                     });
             });
     });
 
 router.route('/devices/:device_id/switchs')
+    .post(function(req, res) {
+        Device.findById(req.params.device_id)
+            .exec(function(err, device){
+                if(err) {
+                    res.send(err);
+                } else {
+                    Switch.create(req.body, function(err, switchs){
+                        for(var i=0; i<switchs.length; i++){
+                            device.switchs.push(switchs[i]._id);
+                        }
+
+                        device.save(function(err, device) {
+                            if(err) {
+                                res.send(err);
+                            } else {
+                                res.json(device);
+                            }
+                        })
+                    });
+                }
+        })
+    })
     .get(function(req,res) {
         Device.findById(req.params.device_id)
             .exec(function(err, device) {
@@ -93,11 +152,8 @@ router.route('/devices/:device_id/switchs')
                         $in: device.switchs
                     }
                 }, function(err, switchs){
-                    var data = {
-                        device: device,
-                        switchs: switchs
-                    };
-                    res.json(data);
+                    device.switchs = switchs;
+                    res.json(device);
                 });
             });
     });
@@ -109,12 +165,8 @@ router.route('/devices/:device_id/switchs/:switch_id')
 
                 Switch.findById(req.params.switch_id)
                     .exec(function(err, switchIot) {
-                        var data = {
-                            device: device,
-                            switchIot: switchIot
-                        };
-
-                        res.json(data);
+                        device.switchs = [switchIot];
+                        res.json(device);
                     });
             });
     });

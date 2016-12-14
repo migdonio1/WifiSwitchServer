@@ -23,6 +23,14 @@ body {
     padding: 15px 0 15px 15px;
 }
 
+.devices-zone {
+    min-height: 90vh;
+}
+
+.single-device-section {
+    padding: 15px 0 15px 15px;
+}
+
 .sensors-section, .switchs-section {
     cursor:pointer;
     margin: 15px 0 15px 15px;

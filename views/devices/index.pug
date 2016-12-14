@@ -10,32 +10,12 @@ block content
     +devices-section(data)
 
 mixin devices-section(data)
-    div.row
-        each device in data
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
-            .col-sm-4
-                div.devices-section
-                    +device-section(device)
+    .devices-zone
+        div.row
+            each device in data
+                .col-sm-4
+                    div.devices-section
+                        +device-section(device)
 
 
 mixin sensor-switch-section(device)
