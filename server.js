@@ -73,7 +73,10 @@ db.once('open', function() {
                 Sensor.findByIdAndUpdate(idsensors, {
                     $push: { values : item }
                 },{ 'new': true, 'upsert': true}, function (err, sensor) {
-
+                    io.emit('actual-value-sensor', {
+                        value : sensor.values[sensor.values.length-1],
+                        id : sensor._id
+                    });
                 })
             })
         });
@@ -93,7 +96,10 @@ db.once('open', function() {
                 Switch.findByIdAndUpdate(idswitchs, {
                     $push: {timeOn : item}
                 }, function (err, switchs) {
-                    console.log(switchs);
+                    io.emit('actual-value-switch', {
+                        value : switchs.timeOn[switchs.timeOn.length-1],
+                        id : switchs._id
+                    });
                 })
             })
         });

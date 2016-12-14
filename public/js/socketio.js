@@ -6,6 +6,8 @@ var $sensorPage = $('.sensor-section');
 var $sensorButton = $('.sensor-buttonn-section');
 var $switchPage = $('.switch-section');
 var $switchButton = $('.switch-buttonnn-section');
+var $sensorValue = $('.sensor-value-section');
+var $switchValue = $('.switch-timeOn-section');
 
 var devices;
 
@@ -100,6 +102,20 @@ io.on('message',function(data) {
 // Add a disconnect listener
 io.on('disconnect',function() {
     console.log('The client has disconnected!');
+});
+
+io.on('actual-value-sensor',function(data) {
+    var value = data.value;
+    var id = data.id;
+    var text = value.value;
+    $sensorValue.text(text);
+});
+
+io.on('actual-value-switch',function(data) {
+    var value = data.value;
+    var id = data.id;
+    var text = value.value;
+    $switchValue.text(text);
 });
 
 io.on('state-device-button',function(data) {
