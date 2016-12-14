@@ -15,11 +15,11 @@ $(function (info) {
         },
 
         title: {
-            text: 'AAPL Stock Price'
+            text: 'Histórico de Temperaturas'
         },
 
         series: [{
-            name: 'AAPL',
+            name: 'Temperatura',
             data: data,
             tooltip: {
                 valueDecimals: 2
