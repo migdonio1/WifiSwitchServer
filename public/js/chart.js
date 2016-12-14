@@ -7,7 +7,7 @@ $(function (info) {
     }
     // Create the chart
 
-    Highcharts.stockChart('container', {
+    Highcharts.stockChart('chart', {
 
 
         rangeSelector: {

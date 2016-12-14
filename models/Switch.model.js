@@ -21,7 +21,8 @@ var switchSchema = new Schema ({
         date: {
             type: Date,
             required: Date.now
-        }
+        },
+        value: String
     }]
 });
 
