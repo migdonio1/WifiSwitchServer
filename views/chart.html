@@ -1,0 +1,63 @@
+    <!DOCTYPE HTML>
+
+    <html>
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Your Website</title>
+
+    </head>
+
+    <body>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="https://code.highcharts.com/stock/highstock.js"></script>
+        <script>            
+                     
+            $(function () {
+                //var dataa = [[1477958400000,8],[1478649600000,20],[1480550400000,16]];
+                var info = [{
+                    date: 1477958400000,
+                    value: 8
+                },{
+                    date: 1478649600000,
+                    value: 20
+                },{
+                    date: 1480550400000,
+                    value: 16
+                }];
+                
+                var data = [];
+                
+                for(var i = 0; i < info.length; i++){
+                    data.push([info[i].date, info[i].value]);
+                }
+                    // Create the chart
+                
+                    Highcharts.stockChart('container', {
+
+
+                        rangeSelector: {
+                            selected: 1
+                        },
+
+                        title: {
+                            text: 'AAPL Stock Price'
+                        },
+
+                        series: [{
+                            name: 'AAPL',
+                            data: data,
+                            tooltip: {
+                                valueDecimals: 2
+                            }
+                        }]
+                    });
+                });
+
+            </script>
+            <div id="container"></div>
+
+    </body>
+
+</html>
