@@ -70,7 +70,7 @@ mixin switch-section(switchIot)
                             h5(class="circle status-" + switchIot.status)
                     .col-sm-6
                         .switch-timeOn-section
-                            h5.switch-timeOn= switchIot.timeOn
+                            h5.switch-timeOn= switchIot.timeOn[switchIot.timeOn.length-1]
 
 mixin map-section(device)
     .row

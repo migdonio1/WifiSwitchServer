@@ -2,7 +2,6 @@ var io = io.connect('http://localhost:3030');
 
 var $devicePage = $('.device-section');
 var $deviceButton = $('.button-section');
-var $deviceCircle = $('.device-section .circle');
 var $sensorPage = $('.sensor-section');
 var $sensorButton = $('.sensor-buttonn-section');
 var $switchPage = $('.switch-section');
@@ -23,6 +22,22 @@ $deviceButton.click(function () {
     io.emit('update-state', {
             id : $(this).data('device-id'),
             status: status
+    });
+    var iddevice = '57feaab555f70680bcaa9768';
+    var idsensor = '57feaab555f70680bcaa9766';
+    var datasensors = '54';
+    io.emit('insert-data-sensor', {
+        devices : iddevice,
+        sensors : idsensor,
+        datasensor : datasensors
+    });
+    var iddevices = '57feaab555f70680bcaa9768';
+    var idswitch = '57feaab555f70680bcaa9767';
+    var dataswitchs = '1';
+    io.emit('insert-data-switch', {
+        devices : iddevices,
+        switchs : idswitch,
+        dataswitch : dataswitchs
     });
 });
 
