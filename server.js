@@ -85,16 +85,15 @@ db.once('open', function() {
             var dataswitchs = data.dataswitch;
             var date = new Date();
             var number = date.getDate();
-            var item = [{
+            var item = {
                 date: number,
                 value: dataswitchs
-            }];
+            };
             Device.findById(iddevice, function (err, device) {
                 Switch.findByIdAndUpdate(idswitchs, {
-                    $push: { timeOn : item }
-                },{ 'new': true, 'upsert': true}, function (err, switchs) {
-                    switchs.timeOn.push(item);
-                    console.log(err);
+                    $push: {timeOn : item}
+                }, function (err, switchs) {
+                    console.log(switchs);
                 })
             })
         });

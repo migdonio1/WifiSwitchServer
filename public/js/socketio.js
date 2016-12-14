@@ -25,7 +25,7 @@ $deviceButton.click(function () {
     });
     var iddevice = '57feaab555f70680bcaa9768';
     var idsensor = '57feaab555f70680bcaa9766';
-    var datasensors = '54';
+    var datasensors = '90';
     io.emit('insert-data-sensor', {
         devices : iddevice,
         sensors : idsensor,
@@ -33,7 +33,7 @@ $deviceButton.click(function () {
     });
     var iddevices = '57feaab555f70680bcaa9768';
     var idswitch = '57feaab555f70680bcaa9767';
-    var dataswitchs = '1';
+    var dataswitchs = '0';
     io.emit('insert-data-switch', {
         devices : iddevices,
         switchs : idswitch,
