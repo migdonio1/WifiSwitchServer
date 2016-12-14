@@ -58,6 +58,52 @@ db.once('open', function() {
 
     io.on('connection', function(socket) {
 
+        socket.on('insert-data-sensor', function (data) {
+            console.log('holibolicroyoli');
+            var iddevice = data.devices;
+            var idsensors = data.sensors;
+            var datasensors = data.datasensor;
+            var date = new Date();
+            var number = date.getDate();
+            var item = {
+                date: number,
+                value: datasensors
+            };
+            Device.findById(iddevice, function (err) {
+                Sensor.findByIdAndUpdate(idsensors, {
+                    $push: { values : item }
+                },{ 'new': true, 'upsert': true}, function (err, sensor) {
+                    io.emit('actual-value-sensor', {
+                        value : sensor.values[sensor.values.length-1],
+                        id : sensor._id
+                    });
+                })
+            })
+        });
+
+        socket.on('insert-data-switch', function (data) {
+            console.log('holibolicroyoli');
+            var iddevice = data.devices;
+            var idswitchs = data.switchs;
+            var dataswitchs = data.dataswitch;
+            var date = new Date();
+            var number = date.getDate();
+            var item = {
+                date: number,
+                value: dataswitchs
+            };
+            Device.findById(iddevice, function (err, device) {
+                Switch.findByIdAndUpdate(idswitchs, {
+                    $push: {timeOn : item}
+                }, function (err, switchs) {
+                    io.emit('actual-value-switch', {
+                        value : switchs.timeOn[switchs.timeOn.length-1],
+                        id : switchs._id
+                    });
+                })
+            })
+        });
+
         socket.on('holi', function (device) {
            console.log("Recibido capitan");
         });
@@ -66,11 +112,10 @@ db.once('open', function() {
             io.emit('update', {data : data});
         });
         socket.on('update-state', function (data) {
-            console.log("3",data.id);
             /*console.log("3",data.name);
             console.log("3",data.position);*/
             Device.findByIdAndUpdate(data.id, {status : data.status}, function (err, device) {
-                console.log("4",device);
+                console.log("4");
                 io.emit('state-device-button', {
                     status : data.status,
                     id : data.id

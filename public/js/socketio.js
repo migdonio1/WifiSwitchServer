@@ -2,11 +2,12 @@ var io = io.connect('http://localhost:3030');
 
 var $devicePage = $('.device-section');
 var $deviceButton = $('.button-section');
-var $deviceCircle = $('.device-section .circle');
 var $sensorPage = $('.sensor-section');
 var $sensorButton = $('.sensor-buttonn-section');
 var $switchPage = $('.switch-section');
 var $switchButton = $('.switch-buttonnn-section');
+var $sensorValue = $('.sensor-value-section');
+var $switchValue = $('.switch-timeOn-section');
 
 var devices;
 
@@ -23,6 +24,22 @@ $deviceButton.click(function () {
     io.emit('update-state', {
             id : $(this).data('device-id'),
             status: status
+    });
+    var iddevice = '57feaab555f70680bcaa9768';
+    var idsensor = '57feaab555f70680bcaa9766';
+    var datasensors = '90';
+    io.emit('insert-data-sensor', {
+        devices : iddevice,
+        sensors : idsensor,
+        datasensor : datasensors
+    });
+    var iddevices = '57feaab555f70680bcaa9768';
+    var idswitch = '57feaab555f70680bcaa9767';
+    var dataswitchs = '0';
+    io.emit('insert-data-switch', {
+        devices : iddevices,
+        switchs : idswitch,
+        dataswitch : dataswitchs
     });
 });
 
@@ -85,6 +102,20 @@ io.on('message',function(data) {
 // Add a disconnect listener
 io.on('disconnect',function() {
     console.log('The client has disconnected!');
+});
+
+io.on('actual-value-sensor',function(data) {
+    var value = data.value;
+    var id = data.id;
+    var text = value.value;
+    $sensorValue.text(text);
+});
+
+io.on('actual-value-switch',function(data) {
+    var value = data.value;
+    var id = data.id;
+    var text = value.value;
+    $switchValue.text(text);
 });
 
 io.on('state-device-button',function(data) {

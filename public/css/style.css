@@ -21,6 +21,9 @@ body {
 
 .devices-section {
     padding: 15px 0 15px 15px;
+}
+
+.devices-zone {
     min-height: 90vh;
 }
 
